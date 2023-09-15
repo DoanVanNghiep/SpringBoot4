@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -26,4 +29,23 @@ public class Student {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_address")
     Address address;
+
+    @ManyToOne
+    @JoinColumn(name = "id_class")
+    Class aClass;
+
+    @OneToOne
+    @JoinColumn(name = "id_student")
+    @JoinColumn(name = "id_subject")
+    StudentSubject subject;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_subject",
+            joinColumns = @JoinColumn( name = "id_student"),
+            inverseJoinColumns = @JoinColumn(name = "id_subject")
+    )
+    List<Subject> subjects = new ArrayList<>();
+
+
 }

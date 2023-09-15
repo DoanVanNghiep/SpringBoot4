@@ -3,6 +3,9 @@ package com.vn.devmaster.services.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -23,5 +26,11 @@ public class Address {
 
     @Column(name = "district", length = 50)
     private String district;
+
+    @OneToMany
+    @JoinColumn(name = "id_address")
+    List<Student> students = new ArrayList<>();
+    // manytoone sẽ cũng giống như thế tuy nhiên ở đây ko sử dụng một danh sách nữa mà sử dụng như onetoone
+
 
 }

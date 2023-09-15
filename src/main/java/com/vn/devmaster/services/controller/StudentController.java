@@ -1,6 +1,8 @@
 package com.vn.devmaster.services.controller;
 import com.vn.devmaster.services.dto.AddressDto;
+import com.vn.devmaster.services.dto.ClassDto;
 import com.vn.devmaster.services.dto.StudentDTO;
+import com.vn.devmaster.services.dto.SubjectDto;
 import com.vn.devmaster.services.services.StudentServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +48,44 @@ public class StudentController {
         return dtos;
     }
 
+    // get all subject
+    @GetMapping("/filter-subject")
+    List<SubjectDto> getAllSubjet(){
+       return studentServices.getAllSubject();
+    }
+    // tìm kiếm môn học
+    @GetMapping("/subject")
+    List<StudentDTO> sreachBySubject(@RequestParam("subject") String subject){
+        List<StudentDTO> dtos = studentServices.sreachSubject(subject);
+        return dtos;
+    }
+
+    // tìm kiếm có điểm lớn hơn 8
+    @GetMapping("/subLonHon8")
+    List<StudentDTO> sreachByPoint(){
+        List<StudentDTO> studentDTOS = studentServices.sreachPoint();
+        return studentDTOS;
+    }
+
+    // get all class
+    @GetMapping("/class")
+    List<ClassDto> getAllClass(){
+        return studentServices.getAllClass();
+    }
+
+    //tìm kiếm sinh viên học ở lớp DEV01
+    @GetMapping("/ClassDEV01")
+    List<StudentDTO> sreachByClass(){
+        List<StudentDTO> studentDTOS = studentServices.sreachClass();
+        return studentDTOS;
+    }
+
+    // tìm kiếm sinh viên học ở lớp DEV02
+    @GetMapping("/classDEV02")
+    List<StudentDTO> sreachClassDEV02(){
+        List<StudentDTO> studentDTOS = studentServices.sreachClassDev02();
+        return studentDTOS;
+    }
 
     @PostMapping("/student")
     String save(@RequestBody StudentDTO studentDTO){

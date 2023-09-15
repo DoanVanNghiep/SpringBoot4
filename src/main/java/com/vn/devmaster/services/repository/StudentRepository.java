@@ -29,4 +29,28 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     @Query(value = "select s from Student s where s.address.city like concat('%',:city,'%') ")
     List<Student> findAllByAddress_City(@Param("city") String city);
+
+    @Query(nativeQuery = true, value = "select s.* from student s\n" +
+            "                inner join student_subject ss on s.id = ss.id_student\n" +
+            "                inner join subject s2 on ss.id_subject = s2.id\n" +
+            "            where s2.name like concat('%', :name , '%')")
+    List<Student> findAllBySubjects(@Param("name") String name);
+
+    @Query(nativeQuery = true,value = "select s.* from student s\n" +
+            "                inner join student_subject ss on s.id = ss.id_student\n" +
+            "                inner join subject s2 on ss.id_subject = s2.id\n" +
+            "            where ss.point > 8")
+    List<Student> findAllByPoint();
+
+    @Query(nativeQuery = true,value = "select s.* from student s\n" +
+            "    inner join student_classes sc on s.id = sc.id_student\n" +
+            "    inner join classes c on sc.id_class = c.id\n" +
+            "where sc.id_class = 01\n")
+    List<Student> findAllByClass();
+
+    @Query(nativeQuery = true,value = "select s.* from student s\n" +
+            "    inner join student_classes sc on s.id = sc.id_student\n" +
+            "    inner join classes c on sc.id_class = c.id\n" +
+            "where sc.id_class = 2")
+    List<Student> findAllByAClass_Name();
 }
